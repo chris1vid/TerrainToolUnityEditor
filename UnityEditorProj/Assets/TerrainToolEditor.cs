@@ -55,8 +55,6 @@ public class TerrainToolEditor : EditorWindow
 
     void AddFilter()
     {
-        // We need to have the terrain accessed
-        terrains[index];
     }
 }
 
