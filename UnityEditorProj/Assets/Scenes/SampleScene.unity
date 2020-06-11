@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 1581633402}
   - component: {fileID: 1581633401}
   - component: {fileID: 1581633400}
-  - component: {fileID: 1581633403}
+  - component: {fileID: 1581633404}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -343,7 +343,7 @@ Terrain:
   m_DetailObjectDistance: 80
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
+  m_SplatMapDistance: 699
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
   m_DrawHeightmap: 1
@@ -373,7 +373,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1581633403
+--- !u!114 &1581633404
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -382,13 +382,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1581633399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 970d9ccf2827ad64ba2d96c820d13c1f, type: 3}
+  m_Script: {fileID: 11500000, guid: bdcfe96a85421ad4fbb04c37eeb2efce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   splatHeights:
   - textureIndex: 0
     startingHeight: 0
-    overlap: 5
   - textureIndex: 1
-    startingHeight: 30
-    overlap: 5
+    startingHeight: 10
+  - textureIndex: 2
+    startingHeight: 20
