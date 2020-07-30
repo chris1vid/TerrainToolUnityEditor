@@ -17,24 +17,33 @@ public class TerrainTextureEditorWindow : EditorWindow
         public int textureIndex; // unused.. make it so that rather then using the default array method, we search by these
         public int startingHeight;
         public int overlap;
-        public int angleMax;
     }
 
     public bool blendByAngle;
+
+    int b = 0;
 
     public SplatHeights[] splatHeights; // the splatheights, these need to be converted properly.
 
     SplatHeights findHeightByIndex(float toFind)
     {
-        for(var m = 0; m < splatHeights.Length; m++)
+        for (var m = 0; m < splatHeights.Length; m++)
         {
+            if (b < 4)
+            {
+                Debug.Log("Tofind " + toFind + "m:" + m + "texindex: " + splatHeights[m].textureIndex);
+                b++;
+            }
             if (splatHeights[m].textureIndex == toFind)
             {
+
                 return splatHeights[m];
             }
         }
         return splatHeights[0];
     }
+
+    
 
     void normalize(float[] v) // accepts a float array -> in the case of it being splat...
     {
@@ -62,87 +71,7 @@ public class TerrainTextureEditorWindow : EditorWindow
         if (ter != null)
         {
 
-            /* slope = EditorGUILayout.FloatField("Slope(y normalized):", slope);
-             slope = Mathf.Clamp01(slope);
-
-             TerrainData terData = ter.terrainData;
-
-             //
-             if (heightDistr == null)
-             {
-                 heightDistr = new Vector2[terData.alphamapLayers - 1]; //-1 because of slope texture is not depending on height
-                 FillDistrubution(heightDistr);
-             }
-             else if (heightDistr.Length != terData.alphamapLayers - 1)
-             {
-                 heightDistr = new Vector2[terData.alphamapLayers - 1];
-                 FillDistrubution(heightDistr);
-             }
-
-             DisplayArray("heightDistr");
-
-             if (GUILayout.Button("Texturize"))
-             {
-
-                 int swidth = terData.alphamapResolution;
-
-                 float[,,] splatMapData = terData.GetAlphamaps(0, 0, swidth, swidth);
-
-                 //Find actual maxHeight
-                 float maxHeight = 0.001f; //prevent zero div
-                 for (int y = 0; y < swidth; y++)
-                 {
-                     for (int x = 0; x < swidth; x++)
-                     {
-
-
-                         if (terData.GetInterpolatedHeight((float)x / swidth, (float)y / swidth) > maxHeight)
-                         {
-                             maxHeight = terData.GetInterpolatedHeight((float)x / swidth, (float)y / swidth);
-                         }
-                     }
-                 }
-
-                 for (int y = 0; y < swidth; y++)
-                 {
-                     for (int x = 0; x < swidth; x++)
-                     {
-
-                         Vector3 nrm = terData.GetInterpolatedNormal((float)x / swidth, (float)y / swidth);
-
-                         int splats = terData.alphamapTextures.Length;
-
-                         if (nrm.y < slope)
-                         {
-                             SetSplatValue(splatMapData, y, x, 0);
-                         }
-                         else
-                         {
-
-                             //Texturize by height
-                             float h = terData.GetInterpolatedHeight((float)x / swidth, (float)y / swidth);
-                             float nh = h / maxHeight;
-
-                             for (int i = 0; i < heightDistr.Length; i++)
-                             {
-                                 if (nh >= heightDistr[i].x && nh <= heightDistr[i].y)
-                                 {
-                                     SetSplatValue(splatMapData, y, x, i + 1);
-                                 }
-                             }
-                         }
-                     }
-                 }
-
-                 //TODO make button to make height data correct for textures
-
-                 //
-                 terData.SetAlphamaps(0, 0, splatMapData);
-
-             }
-
-         }
-         */
+            
 
 
 
@@ -195,21 +124,21 @@ public class TerrainTextureEditorWindow : EditorWindow
 
                             if (i == splatHeights.Length - 1 && terrainHeight >= findHeightByIndex(i).startingHeight)
                             {
-                                splat[i] = 1;
+                                splat[findHeightByIndex(i).textureIndex] = 1;
 
-
+                                
                             }
 
                             else if (terrainHeight >= findHeightByIndex(i).startingHeight && terrainHeight <= findHeightByIndex(i + 1).startingHeight)
                             { 
-                                splat[i] = 1;
+                                splat[findHeightByIndex(i).textureIndex] = 1;
                             }
 
                             //normalize(splat);
 
                             for (int j = 0; j < splatHeights.Length; j++)
                             {
-                                splatmapData[x, y, j] = splat[j];
+                                splatmapData[x, y, j] = splat[findHeightByIndex(j).textureIndex];
                             }
                         }
 
@@ -224,7 +153,7 @@ public class TerrainTextureEditorWindow : EditorWindow
 
                             // Steepness is given as an angle, 0..90 degrees. Divide
                             // by 90 to get an alpha blending value in the range 0..1.
-                            var frac = angle / 90.0;
+                            var frac = angle / 180.0;
                             splatmapData[x, y, 0] = (float)frac;
                             splatmapData[x, y, 1] = (float)(1 - frac);
 
